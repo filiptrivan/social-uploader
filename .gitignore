@@ -1,0 +1,71 @@
+# PHP
+Backend/*.log
+Backend/.DS_Store
+Backend/.env
+Backend/.env.backup
+Backend/.env.production
+Backend/.phpactor.json
+Backend/.phpunit.result.cache
+Backend/.fleet/
+Backend/.idea/
+Backend/.nova/
+Backend/.phpunit.cache
+Backend/.vscode/
+Backend/.zed/
+Backend/auth.json
+Backend/node_modules/
+Backend/public/build/
+Backend/public/hot/
+Backend/public/storage/
+Backend/storage/*.key
+Backend/storage/pail/
+Backend/vendor/
+Backend/Homestead.json
+Backend/Homestead.yaml
+Backend/Thumbs.db
+
+# Angular
+**/dist/
+**/tmp/
+**/out-tsc/
+**/bazel-out/
+**/.angular/cache/
+
+# Node
+**/node_modules/
+**/npm-debug.log
+**/yarn-error.log
+**/*.env
+**/*.env.local
+
+# IDEs and editors
+**/.idea/
+**/.project
+**/.classpath
+**/.c9/
+**/*.launch
+**/.settings/
+**/*.sublime-workspace
+
+# Visual Studio Code
+**/.vscode/*
+**/!.vscode/settings.json
+**/!.vscode/tasks.json
+**/!.vscode/launch.json
+**/!.vscode/extensions.json
+**/.history/*
+
+# Miscellaneous
+**/.sass-cache/
+**/connect.lock
+**/coverage
+**/libpeerconnection.log
+**/testem.log
+**/typings
+**/*.pid
+**/*.bak
+**/*.tmp
+
+# System files
+**/.DS_Store
+**/Thumbs.db
