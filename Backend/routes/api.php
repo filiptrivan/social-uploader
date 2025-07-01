@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Requests\RefreshTokenRequest;
 
-// Route::post('/Security/RefreshToken', function (Request $request) {
+Route::post('/GetPaginatedProjectList', function (Request $request) {
 //     error_log(json_encode($request->all()));
 //     $data = [
 //         "userId" => 1,
@@ -13,4 +13,4 @@ use App\Http\Requests\RefreshTokenRequest;
 //         "refreshToken" => "refreshToken"
 //     ];
 //     return response()->json($data);
-// });
+});

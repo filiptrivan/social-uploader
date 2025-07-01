@@ -1,0 +1,9 @@
+﻿<ng-container *transloco="let t">
+    <project-base-details
+    [panelTitle]="t('Project')"
+    [formGroup]="formGroup" 
+    [projectFormGroup]="projectFormGroup" 
+    (onSave)="onSave()"
+    [getCrudMenuForOrderedData]="getCrudMenuForOrderedData"
+    />
+</ng-container>
