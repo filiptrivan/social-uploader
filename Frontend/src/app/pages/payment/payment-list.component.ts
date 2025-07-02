@@ -29,8 +29,7 @@ export class PaymentListComponent implements OnInit {
 
     cols: Column<Payment>[];
 
-    exportPaymentListToExcelObservableMethod = this.apiService.exportPaymentListToExcel;
-    deletePaymentObservableMethod = this.apiService.deletePayment;
+    // exportPaymentListToExcelObservableMethod = this.apiService.exportPaymentListToExcel;
 
     constructor(
         private apiService: ApiService,
@@ -43,12 +42,7 @@ export class PaymentListComponent implements OnInit {
             {name: this.translocoService.translate('CreatedAt'), filterType: 'date', field: 'createdAt', showMatchModes: true},
             {actions:[
                 {name: this.translocoService.translate('Details'), field: 'Details'},
-                {name:  this.translocoService.translate('Delete'), field: 'Delete'},
             ]},
         ]
-    }
-
-    getImage(logoData){
-        return getHtmlImgDisplayString64(logoData);
     }
 }

@@ -1,14 +1,18 @@
 <?php
 
+namespace App\QueryFilters;
+
+use App\Enums\MatchModeCodes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use App\DTO\PaginatedResultDTO;
+use App\DTO\FilterDTO;
 
-class ProjectFilterBuilder
+class PaymentFilterBuilder
 {
-    public static function build(Builder $query, array $filterDTO): PaginatedResultDTO
+    public static function build(Builder $query, FilterDTO $filterDTO): PaginatedResultDTO
     {
-        $filters = $filterDTO['filters'] ?? [];
+        $filters = $filterDTO->filters;
 
         foreach ($filters as $field => $rules) {
             foreach ($rules as $rule) {
@@ -16,8 +20,8 @@ class ProjectFilterBuilder
                     continue;
                 }
 
-                $matchMode = $rule['matchMode'];
-                $value = $rule['value'];
+                $matchMode = $rule->matchMode;
+                $value = $rule->value;
 
                 switch ($field) {
                     case 'version':
@@ -38,41 +42,41 @@ class ProjectFilterBuilder
         }
 
         $totalRecords = $query->count();
-        $items = $query->paginate(10);
+        $items = $query->skip($filterDTO->first)->take($filterDTO->rows)->get();
 
         return new PaginatedResultDTO($totalRecords, $items);
     }
 
-    private static function applyStringFilter(Builder $query, string $field, string $matchMode, string $value): Builder
+    private static function applyStringFilter(Builder $query, string $field, MatchModeCodes $matchMode, string $value): Builder
     {
         return match ($matchMode) {
-            'startsWith' => $query->where($field, 'like', $value . '%'),
-            'contains' => $query->where($field, 'like', '%' . $value . '%'),
-            'equals' => $query->where($field, '=', $value),
-            default => throw new \InvalidArgumentException("Invalid string match mode: $matchMode"),
+            MatchModeCodes::StartsWith => $query->where($field, 'like', $value . '%'),
+            MatchModeCodes::Contains => $query->where($field, 'like', '%' . $value . '%'),
+            MatchModeCodes::Equals => $query->where($field, '=', $value),
+            default => throw new \InvalidArgumentException("Invalid string match mode."),
         };
     }
 
-    private static function applyNumericFilter(Builder $query, string $field, string $matchMode, $value): Builder
+    private static function applyNumericFilter(Builder $query, string $field, MatchModeCodes $matchMode, $value): Builder
     {
         return match ($matchMode) {
-            'equals' => $query->where($field, '=', $value),
-            'lessThan' => $query->where($field, '<', $value),
-            'greaterThan' => $query->where($field, '>', $value),
-            'in' => $query->whereIn($field, $value),
-            default => throw new \InvalidArgumentException("Invalid numeric match mode: $matchMode"),
+            MatchModeCodes::Equals => $query->where($field, '=', $value),
+            MatchModeCodes::LessThan => $query->where($field, '<', $value),
+            MatchModeCodes::GreaterThan => $query->where($field, '>', $value),
+            MatchModeCodes::In => $query->whereIn($field, $value),
+            default => throw new \InvalidArgumentException("Invalid numeric match mode."),
         };
     }
 
-    private static function applyDateFilter(Builder $query, string $field, string $matchMode, string $value): Builder
+    private static function applyDateFilter(Builder $query, string $field, MatchModeCodes $matchMode, string $value): Builder
     {
         $date = \Carbon\Carbon::parse($value);
 
         return match ($matchMode) {
-            'equals' => $query->whereDate($field, '=', $date),
-            'lessThan' => $query->whereDate($field, '<', $date),
-            'greaterThan' => $query->whereDate($field, '>', $date),
-            default => throw new \InvalidArgumentException("Invalid date match mode: $matchMode"),
+            MatchModeCodes::Equals => $query->whereDate($field, '=', $date),
+            MatchModeCodes::LessThan => $query->whereDate($field, '<', $date),
+            MatchModeCodes::GreaterThan => $query->whereDate($field, '>', $date),
+            default => throw new \InvalidArgumentException("Invalid date match mode."),
         };
     }
 }

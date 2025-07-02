@@ -3,18 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiSecurityService, Filter, PaginatedResult, Namebook, Codebook, LazyLoadSelectedIdsResult, VerificationTokenRequest, AuthResult, ExternalProvider } from 'spiderly';
 import { ConfigService } from '../config.service';
-import { Notification } from '../../entities/business-entities.generated';
+import { Notification, Payment } from '../../entities/business-entities.generated';
 import { NotificationSaveBody } from '../../entities/business-entities.generated';
-import { Category } from '../../entities/business-entities.generated';
-import { CategorySaveBody } from '../../entities/business-entities.generated';
-import { CategoryMainUIForm } from '../../entities/business-entities.generated';
 import { NotificationMainUIForm } from '../../entities/business-entities.generated';
 import { User } from '../../entities/business-entities.generated';
 import { UserSaveBody } from '../../entities/business-entities.generated';
 import { UserMainUIForm } from '../../entities/business-entities.generated';
-import { UserNotification } from '../../entities/business-entities.generated';
-import { UserNotificationSaveBody } from '../../entities/business-entities.generated';
-import { UserNotificationMainUIForm } from '../../entities/business-entities.generated';
 
 @Injectable({
     providedIn: 'root'
@@ -48,25 +42,6 @@ export class ApiGeneratedService extends ApiSecurityService {
         return this.http.post<PaginatedResult<Notification>>(`${this.config.apiUrl}/Notification/GetNotificationsForCurrentUser`, filterDTO, this.config.httpSkipSpinnerOptions);
     }
 
-    getPaginatedCategoryList = (filterDTO: Filter): Observable<PaginatedResult<Category>> => { 
-        return this.http.post<PaginatedResult<Category>>(`${this.config.apiUrl}/Category/GetPaginatedCategoryList`, filterDTO, this.config.httpSkipSpinnerOptions);
-    }
-
-    exportCategoryListToExcel = (filterDTO: Filter): Observable<any> => { 
-        return this.http.post(`${this.config.apiUrl}/Category/ExportCategoryListToExcel`, filterDTO, { observe: 'response', responseType: 'blob' });
-    }
-
-    getCategoryList = (): Observable<Category[]> => { 
-        return this.http.get<Category[]>(`${this.config.apiUrl}/Category/GetCategoryList`, this.config.httpOptions);
-    }
-
-    getCategoryMainUIFormDTO = (id: number): Observable<CategoryMainUIForm> => { 
-        return this.http.get<CategoryMainUIForm>(`${this.config.apiUrl}/Category/GetCategoryMainUIFormDTO?id=${id}`, this.config.httpOptions);
-    }
-
-    getCategory = (id: number): Observable<Category> => { 
-        return this.http.get<Category>(`${this.config.apiUrl}/Category/GetCategory?id=${id}`, this.config.httpOptions);
-    }
 
 
 
@@ -74,17 +49,6 @@ export class ApiGeneratedService extends ApiSecurityService {
 
 
 
-
-
-    saveCategory = (saveBodyDTO: CategorySaveBody): Observable<CategorySaveBody> => { 
-        return this.http.put<CategorySaveBody>(`${this.config.apiUrl}/Category/SaveCategory`, saveBodyDTO, this.config.httpOptions);
-    }
-
-
-
-    deleteCategory = (id: number): Observable<any> => { 
-        return this.http.delete(`${this.config.apiUrl}/Category/DeleteCategory?id=${id}`, this.config.httpOptions);
-    }
 
 
     getPaginatedNotificationList = (filterDTO: Filter): Observable<PaginatedResult<Notification>> => { 
@@ -139,6 +103,10 @@ export class ApiGeneratedService extends ApiSecurityService {
 
     getPaginatedUserList = (filterDTO: Filter): Observable<PaginatedResult<User>> => { 
         return this.http.post<PaginatedResult<User>>(`${this.config.apiUrl}/User/GetPaginatedUserList`, filterDTO, this.config.httpSkipSpinnerOptions);
+    }
+
+    getPaginatedPaymentList = (filterDTO: Filter): Observable<PaginatedResult<Payment>> => { 
+        return this.http.post<PaginatedResult<Payment>>(`${this.config.apiUrl}/Payment/GetPaginatedPaymentList`, filterDTO, this.config.httpSkipSpinnerOptions);
     }
 
     exportUserListToExcel = (filterDTO: Filter): Observable<any> => { 

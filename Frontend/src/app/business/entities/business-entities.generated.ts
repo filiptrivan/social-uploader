@@ -1,77 +1,6 @@
 import { BaseEntity, Filter, FilterRule, FilterSortMeta, MimeTypes, Namebook } from 'spiderly';
 
 
-
-export class Category extends BaseEntity
-{
-    name?: string;
-	version?: number;
-	id?: number;
-	createdAt?: Date;
-	modifiedAt?: Date;
-
-    constructor(
-    {
-        name,
-		version,
-		id,
-		createdAt,
-		modifiedAt
-    }:{
-        name?: string;
-		version?: number;
-		id?: number;
-		createdAt?: Date;
-		modifiedAt?: Date;     
-    } = {}
-    ) {
-        super('Category'); 
-
-        this.name = name;
-		this.version = version;
-		this.id = id;
-		this.createdAt = createdAt;
-		this.modifiedAt = modifiedAt;
-    }
-}
-
-
-export class CategorySaveBody extends BaseEntity
-{
-    categoryDTO?: Category;
-
-    constructor(
-    {
-        categoryDTO
-    }:{
-        categoryDTO?: Category;     
-    } = {}
-    ) {
-        super('CategorySaveBody'); 
-
-        this.categoryDTO = categoryDTO;
-    }
-}
-
-
-export class CategoryMainUIForm extends BaseEntity
-{
-    categoryDTO?: Category;
-
-    constructor(
-    {
-        categoryDTO
-    }:{
-        categoryDTO?: Category;     
-    } = {}
-    ) {
-        super('CategoryMainUIForm'); 
-
-        this.categoryDTO = categoryDTO;
-    }
-}
-
-
 export class Notification extends BaseEntity
 {
     title?: string;
@@ -250,73 +179,67 @@ export class UserMainUIForm extends BaseEntity
     }
 }
 
-
-export class UserNotification extends BaseEntity
+export class Payment extends BaseEntity
 {
-    notificationDisplayName?: string;
-	notificationId?: number;
-	userDisplayName?: string;
-	userId?: number;
-	isMarkedAsRead?: boolean;
+	version?: number;
+	id?: number;
+	createdAt?: Date;
+	modifiedAt?: Date;
 
     constructor(
     {
-        notificationDisplayName,
-		notificationId,
-		userDisplayName,
-		userId,
-		isMarkedAsRead
+		version,
+		id,
+		createdAt,
+		modifiedAt
     }:{
-        notificationDisplayName?: string;
-		notificationId?: number;
-		userDisplayName?: string;
-		userId?: number;
-		isMarkedAsRead?: boolean;     
+		version?: number;
+		id?: number;
+		createdAt?: Date;
+		modifiedAt?: Date;     
     } = {}
     ) {
-        super('UserNotification'); 
+        super('Payment'); 
 
-        this.notificationDisplayName = notificationDisplayName;
-		this.notificationId = notificationId;
-		this.userDisplayName = userDisplayName;
-		this.userId = userId;
-		this.isMarkedAsRead = isMarkedAsRead;
+		this.version = version;
+		this.id = id;
+		this.createdAt = createdAt;
+		this.modifiedAt = modifiedAt;
     }
 }
 
 
-export class UserNotificationSaveBody extends BaseEntity
+export class PaymentSaveBody extends BaseEntity
 {
-    userNotificationDTO?: UserNotification;
+    paymentDTO?: Payment;
 
     constructor(
     {
-        userNotificationDTO
+        paymentDTO,
     }:{
-        userNotificationDTO?: UserNotification;     
+        paymentDTO?: Payment;
     } = {}
     ) {
-        super('UserNotificationSaveBody'); 
+        super('PaymentSaveBody'); 
 
-        this.userNotificationDTO = userNotificationDTO;
+        this.paymentDTO = paymentDTO;
     }
 }
 
 
-export class UserNotificationMainUIForm extends BaseEntity
+export class PaymentMainUIForm extends BaseEntity
 {
-    userNotificationDTO?: UserNotification;
+    paymentDTO?: Payment;
 
     constructor(
     {
-        userNotificationDTO
+        paymentDTO
     }:{
-        userNotificationDTO?: UserNotification;     
+        paymentDTO?: Payment;     
     } = {}
     ) {
-        super('UserNotificationMainUIForm'); 
+        super('PaymentMainUIForm'); 
 
-        this.userNotificationDTO = userNotificationDTO;
+        this.paymentDTO = paymentDTO;
     }
 }
-

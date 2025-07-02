@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { InfoCardComponent } from 'spiderly';
 import { ConfigService } from 'src/app/business/services/config.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
     templateUrl: './homepage.component.html',
+    styleUrl: './homepage.component.scss',
     imports: [
-      InfoCardComponent,
       TranslocoDirective,
+      ButtonModule,
     ],
 })
 export class HomepageComponent implements OnInit {

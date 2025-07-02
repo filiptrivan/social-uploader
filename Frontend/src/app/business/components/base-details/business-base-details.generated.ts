@@ -13,7 +13,7 @@ import { combineLatest, firstValueFrom, forkJoin, map, Observable, of, Subscript
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../services/auth/auth.service';
 import { SpiderlyControlsModule, CardSkeletonComponent, IndexCardComponent, IsAuthorizedForSaveEvent, SpiderlyDataTableComponent, SpiderlyFormArray, BaseEntity, LastMenuIconIndexClicked, SpiderlyFormGroup, SpiderlyButton, nameof, BaseFormService, getControl, Column, Filter, LazyLoadSelectedIdsResult, AllClickEvent, SpiderlyFileSelectEvent, getPrimengDropdownNamebookOptions, PrimengOption, SpiderlyFormControl, getPrimengAutocompleteNamebookOptions } from 'spiderly';
-import { Notification, NotificationSaveBody, User, UserNotification, CategorySaveBody, UserSaveBody, UserNotificationSaveBody } from '../../entities/business-entities.generated';
+import { Notification, NotificationSaveBody, User, UserSaveBody } from '../../entities/business-entities.generated';
 
 @Component({
     selector: 'notification-base-details',
@@ -482,3 +482,198 @@ export class UserBaseDetailsComponent {
     }
 
 }
+
+// @Component({
+//     selector: 'payment-base-details',
+//     template: `
+// <ng-container *transloco="let t">
+//     <spiderly-panel [isFirstMultiplePanel]="isFirstMultiplePanel" [isMiddleMultiplePanel]="isMiddleMultiplePanel" [isLastMultiplePanel]="isLastMultiplePanel" [showPanelHeader]="showPanelHeader" >
+//         <panel-header [title]="panelTitle" [showBigTitle]="showBigPanelTitle" [icon]="panelIcon"></panel-header>
+
+//         <panel-body>
+//             @defer (when loading === false) {
+//                 <form class="grid">
+//                     <ng-content select="[BEFORE]"></ng-content>
+//                     <div *ngIf="showLogoBlobNameForPayment" class="col-12">
+//                         <spiderly-file [control]="control('logoBlobName', paymentFormGroup)" [fileData]="paymentFormGroup.controls.logoBlobNameData.getRawValue()" [objectId]="paymentFormGroup.controls.id.getRawValue()" (onFileSelected)="uploadLogoBlobNameForPayment($event)" [disabled]="!isAuthorizedForSave"></spiderly-file>
+//                     </div>
+//                     <div *ngIf="showPrimaryColorForPayment" class="col-12 md:col-6">
+//                         <spiderly-colorpicker [control]="control('primaryColor', paymentFormGroup)" [showInputTextField]="showPrimaryColorTextFieldForPayment"></spiderly-colorpicker>
+//                     </div>
+//                     <div *ngIf="showNameForPayment" class="col-12 md:col-6">
+//                         <spiderly-textbox [control]="control('name', paymentFormGroup)"></spiderly-textbox>
+//                     </div>
+//                     <ng-content select="[AFTER]"></ng-content>
+//                 </form>
+//             } @placeholder {
+//                 <card-skeleton [height]="502"></card-skeleton>
+//             }
+//         </panel-body>
+
+//         <panel-footer>
+//             <spiderly-button [disabled]="!isAuthorizedForSave" (onClick)="save()" [label]="t('Save')" icon="pi pi-save"></spiderly-button>
+//             @for (button of additionalButtons; track button.label) {
+//                 <spiderly-button (onClick)="button.onClick()" [disabled]="button.disabled" [label]="button.label" [icon]="button.icon"></spiderly-button>
+//             }
+//             <return-button *ngIf="showReturnButton" ></return-button>
+//         </panel-footer>
+//     </spiderly-panel>
+// </ng-container>
+//     `,
+//     imports: [
+//         CommonModule,
+//         FormsModule,
+//         ReactiveFormsModule,
+//         SpiderlyControlsModule,
+//         TranslocoDirective,
+//         CardSkeletonComponent,
+//         IndexCardComponent,
+//         SpiderlyDataTableComponent,
+//     ]
+// })
+// export class PaymentBaseDetailsComponent {
+//     @Output() onSave = new EventEmitter<void>();
+//     @Output() onAfterFormGroupInit = new EventEmitter<void>();
+//     @Input() getCrudMenuForOrderedData: (formArray: SpiderlyFormArray, modelConstructor: BaseEntity, lastMenuIconIndexClicked: LastMenuIconIndexClicked, adjustFormArrayManually: boolean) => MenuItem[];
+//     @Input() formGroup: SpiderlyFormGroup;
+//     @Input() paymentFormGroup: SpiderlyFormGroup<Payment>;
+//     @Input() additionalButtons: SpiderlyButton[] = [];
+//     @Input() isFirstMultiplePanel: boolean = false;
+//     @Input() isMiddleMultiplePanel: boolean = false;
+//     @Input() isLastMultiplePanel: boolean = false;
+//     @Input() showPanelHeader: boolean = true;
+//     @Input() panelTitle: string;
+//     @Input() showBigPanelTitle: boolean = true;
+//     @Input() panelIcon: string;
+//     @Input() showReturnButton: boolean = true;
+//     authorizationForSaveSubscription: Subscription;
+//     @Input() authorizedForSaveObservable: () => Observable<boolean> = () => of(true);
+//     isAuthorizedForSave: boolean = true;
+//     @Output() onIsAuthorizedForSaveChange = new EventEmitter<IsAuthorizedForSaveEvent>(); 
+
+//     modelId: number;
+//     loading: boolean = true;
+
+//     paymentSaveBodyName: string = nameof<PaymentSaveBody>('paymentDTO');
+
+
+//     @Input() showLogoBlobNameForPayment = true;
+//     @Input() showPrimaryColorForPayment = true;
+//     @Input() showNameForPayment = true;
+//     @Input() showCategoriesForPayment = true;
+
+
+//     @Input() showPrimaryColorTextFieldForPayment = true;
+
+
+//     constructor(
+//         private apiService: ApiService,
+//         private route: ActivatedRoute,
+//         private baseFormService: BaseFormService,
+//         private validatorService: ValidatorService,
+//         private translateLabelsService: TranslateLabelsService,
+//         private translocoService: TranslocoService,
+//         private authService: AuthService,
+//     ) {}
+
+//     ngOnInit(){
+//         this.formGroup.initSaveBody = () => { 
+//             let saveBody = new PaymentSaveBody();
+//             saveBody.paymentDTO = this.paymentFormGroup.getRawValue();
+
+//             return saveBody;
+//         }
+
+//         this.formGroup.saveObservableMethod = this.apiService.savePayment;
+//         this.formGroup.mainDTOName = this.paymentSaveBodyName;
+
+//         this.route.params.subscribe(async (params) => {
+//             this.modelId = params['id'];
+
+//             if(this.modelId > 0){
+//                 forkJoin({
+//                     mainUIFormDTO: this.apiService.getPaymentMainUIFormDTO(this.modelId),
+//                 })
+//                 .subscribe(({ mainUIFormDTO }) => {
+//                     this.initPaymentFormGroup(new Payment(mainUIFormDTO.paymentDTO));
+
+
+
+//                     this.authorizationForSaveSubscription = this.handleAuthorizationForSave().subscribe();
+//                     this.loading = false;
+//                 });
+//             }
+//             else{
+//                 this.initPaymentFormGroup(new Payment({id: 0}));
+
+//                 this.authorizationForSaveSubscription = this.handleAuthorizationForSave().subscribe();
+//                 this.loading = false;
+//             }
+//         });
+//     }
+
+//     initPaymentFormGroup(payment: Payment) {
+//         this.baseFormService.addFormGroup<Payment>(
+//             this.paymentFormGroup, 
+//             this.formGroup, 
+//             payment, 
+//             this.paymentSaveBodyName,
+//             ['primaryColor', 'createdAt', 'modifiedAt']
+//         );
+//         this.paymentFormGroup.mainDTOName = this.paymentSaveBodyName;
+
+//         this.onAfterFormGroupInit.next();
+//     }
+
+//     handleAuthorizationForSave = () => {
+//         return combineLatest([this.authService.currentUserPermissionCodes$, this.authorizedForSaveObservable()]).pipe(
+//             map(([currentUserPermissionCodes, isAuthorizedForSave]) => {
+//                 if (currentUserPermissionCodes != null && isAuthorizedForSave != null) {
+//                     this.isAuthorizedForSave =
+
+//                         (currentUserPermissionCodes.includes('InsertPayment') && this.modelId <= 0) || 
+//                         (currentUserPermissionCodes.includes('UpdatePayment') && this.modelId > 0) ||
+//                         isAuthorizedForSave;
+
+//                     if (this.isAuthorizedForSave) { 
+//                         this.paymentFormGroup.controls.logoBlobName.enable();
+//                         this.paymentFormGroup.controls.primaryColor.enable();
+//                         this.paymentFormGroup.controls.name.enable();
+
+//                     }
+//                     else{
+//                         this.paymentFormGroup.controls.logoBlobName.disable();
+//                         this.paymentFormGroup.controls.primaryColor.disable();
+//                         this.paymentFormGroup.controls.name.disable();
+
+//                     }
+
+//                     this.onIsAuthorizedForSaveChange.next(new IsAuthorizedForSaveEvent({
+//                         isAuthorizedForSave: this.isAuthorizedForSave, 
+//                         currentUserPermissionCodes: currentUserPermissionCodes
+//                     })); 
+//                 }
+//             })
+//         );
+//     }
+
+
+//     control(formControlName: string, formGroup: SpiderlyFormGroup){
+//         return getControl(formControlName, formGroup);
+//     }
+
+//     getFormArrayGroups<T>(formArray: SpiderlyFormArray): SpiderlyFormGroup<T>[]{
+//         return this.baseFormService.getFormArrayGroups<T>(formArray);
+//     }
+
+//     save(){
+//         this.onSave.next();
+//     }
+
+// 	ngOnDestroy(){
+//         if (this.authorizationForSaveSubscription) {
+//             this.authorizationForSaveSubscription.unsubscribe();
+//         }
+//     }
+
+// }

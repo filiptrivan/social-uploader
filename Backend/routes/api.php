@@ -1,16 +1,17 @@
 <?php
 
+use App\DTO\FilterDTO;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Requests\RefreshTokenRequest;
+use App\Models\Payment;
+use App\QueryFilters\PaymentFilterBuilder;
 
-Route::post('/GetPaginatedProjectList', function (Request $request) {
-//     error_log(json_encode($request->all()));
-//     $data = [
-//         "userId" => 1,
-//         "email" => "filip@example.com",
-//         "accessToken" => "accessToken",
-//         "refreshToken" => "refreshToken"
-//     ];
-//     return response()->json($data);
+Route::post('/Payment/GetPaginatedPaymentList', function (FilterDTO  $request) {
+    $filterDTO = $request->toDto();
+    error_log(json_encode($filterDTO->all()));
+    error_log($filterDTO->first);
+    error_log(json_encode(PaymentFilterBuilder::build(Payment::query(), $filterDTO)));
+    return json_encode(PaymentFilterBuilder::build(Payment::query(), $filterDTO));
 });

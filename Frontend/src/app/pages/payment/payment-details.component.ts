@@ -3,22 +3,20 @@ import { ChangeDetectorRef, Component, KeyValueDiffers, OnInit } from '@angular/
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 import { ApiService } from 'src/app/business/services/api/api.service';
-import { Project } from 'src/app/business/entities/business-entities.generated';
-import { ProjectBaseDetailsComponent } from 'src/app/business/components/base-details/business-base-details.generated';
+import { Payment } from 'src/app/business/entities/business-entities.generated';
 import { BaseFormCopy, SpiderlyFormGroup, SpiderlyMessageService, BaseFormService, SpiderlyPanelsModule, SpiderlyControlsModule } from 'spiderly';
 
 @Component({
-    selector: 'project-details',
-    templateUrl: './project-details.component.html',
+    selector: 'payment-details',
+    templateUrl: './payment-details.component.html',
     imports: [
         TranslocoDirective,
         SpiderlyPanelsModule,
         SpiderlyControlsModule,
-        ProjectBaseDetailsComponent
     ]
 })
-export class ProjectDetailsComponent extends BaseFormCopy implements OnInit {
-    projectFormGroup = new SpiderlyFormGroup<Project>({});
+export class PaymentDetailsComponent extends BaseFormCopy implements OnInit {
+    paymentFormGroup = new SpiderlyFormGroup<Payment>({});
 
     constructor(
         protected override differs: KeyValueDiffers,

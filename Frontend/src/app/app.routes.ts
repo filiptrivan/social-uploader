@@ -6,6 +6,10 @@ const layoutRoutes: Routes = [
         path: '',
         loadComponent: () => import('./pages/homepage/homepage.component').then(c => c.HomepageComponent),
     },
+    {
+        path: 'payments',
+        loadComponent: () => import('./pages/payment/payment-list.component').then(c => c.PaymentListComponent),
+    },
 ];
 
 export const routes: Routes = [

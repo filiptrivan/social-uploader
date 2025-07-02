@@ -1,5 +1,9 @@
 <?php
 
+namespace App\DTO;
+
+use App\Enums\MatchModeCodes;
+
 class FilterRuleDTO
 {
     /**
