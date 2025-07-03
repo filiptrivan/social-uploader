@@ -140,14 +140,10 @@ $green-500: #22c55e;
                 align-items: center;
                 gap: 0.5rem;
                 line-height: 1.2;
-                color: $surface-800;
+            }
 
-                .check-icon {
-                    color: $green-500;
-                    font-size: 1.25rem;
-                    line-height: 1;
-                    flex-shrink: 0;
-                }
+            .features-list {
+                margin-left: 18px;
             }
         }
     }

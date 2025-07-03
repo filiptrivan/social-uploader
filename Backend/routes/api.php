@@ -15,3 +15,38 @@ Route::post('/Payment/GetPaginatedPaymentList', function (FilterDTO  $request) {
     error_log(json_encode(PaymentFilterBuilder::build(Payment::query(), $filterDTO)));
     return json_encode(PaymentFilterBuilder::build(Payment::query(), $filterDTO));
 });
+
+Route::post('/create-checkout-session', function (Request $request) {
+    $ch = curl_init('https://localhost:44388/create-checkout-session');
+
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_HEADER => true, // Needed to capture headers (including Location)
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json',
+            'Accept: application/json',
+        ],
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_SSL_VERIFYPEER => false,
+    ]);
+
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        throw new \Exception('cURL error: ' . curl_error($ch));
+    }
+
+    $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+    $headerStr = substr($response, 0, $headerSize);
+    curl_close($ch);
+
+    // Extract Location header
+    if (preg_match('/^location:\s*(.+)$/im', $headerStr, $matches)) {
+        $location = trim($matches[1]);
+        error_log($location);
+        return response($location, 200);
+    }
+
+    return response()->json(['error' => 'Location header not found'], 500);
+});

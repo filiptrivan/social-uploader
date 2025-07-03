@@ -1,59 +1,68 @@
 <div class="pricing-container">
   <div class="header">
-    <h2 class="title">Pricing Plans</h2>
-    <p class="subtitle">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos.</p>
+    <h2 class="title">Simple Pricing, Full Access</h2>
+    <p class="subtitle">One plan. All features. Free for the first month—then just $69/month.</p>
   </div>
 
   <div class="plans">
 
     <div class="plan-card">
       <div class="plan-header">
-        <h4>Free</h4>
-        <p>All NuGet packages.</p>
+        <h3>All-Inclusive Plan</h3>
+        <p>Unlimited access to everything Spiderly offers. No feature gates, no surprises.</p>
       </div>
-
-      <hr />
 
       <div class="plan-price">
-        <span class="price">$59</span>
-        <span class="period">per month</span>
+        <span class="price">
+          <div style="text-decoration: line-through; margin-bottom: 5px;">$69 / month</div>
+          <div>
+            <span style="font-size: 40px;" class="gradient-title">$0</span>
+            for one month
+          </div>
+        </span>
       </div>
+
+      <p-button label="Get Started" [fluid]="true" size="large" (onClick)="createCheckoutSession()"></p-button>
 
       <hr />
 
       <ul class="features-list">
-        <li><span class="check-icon">✔</span><span>Arcu vitae elementum</span></li>
-        <li><span class="check-icon">✔</span><span>Dui faucibus in ornare</span></li>
-        <li><span class="check-icon">✔</span><span>Morbi tincidunt augue</span></li>
-        <li><span class="check-icon">✔</span><span>Duis ultricies lacus sed</span></li>
+        <li><i class="pi pi-microchip"></i><strong>Full CRUD Generator Suite</strong></li>
+        <ul class="features-list">
+          <li><i class="pi pi-check"></i>List Views</li>
+          <li><i class="pi pi-check"></i>Details Page</li>
+          <li><i class="pi pi-check"></i>API Client</li>
+          <li><i class="pi pi-check"></i>Controllers</li>
+          <li><i class="pi pi-check"></i>Service Methods</li>
+          <li><i class="pi pi-check"></i>Server- and Client-side Validation</li>
+          <li><i class="pi pi-check"></i>DTOs and Enums</li>
+          <li><i class="pi pi-check"></i>TypeScript Models and Enums</li>
+          <li><i class="pi pi-check"></i>Server- and Client-side Translations</li>
+        </ul>
+
+        <hr/>
+
+        <li><i class="pi pi-shield"></i><strong>Security</strong></li>
+        <ul class="features-list">
+          <li><i class="pi pi-check"></i>Authentication</li>
+          <li><i class="pi pi-check"></i>Authorization</li>
+        </ul>
+        
+        <hr/>
+
+        <li><i class="pi pi-bolt"></i><strong>Spiderly CLI</strong></li>
+        <ul class="features-list">
+          <li><i class="pi pi-check"></i>App Starter Template Project Initialization</li>
+          <li><i class="pi pi-check"></i>Adding new page starter template components for newly created entity</li>
+        </ul>
+
+        <hr/>
+
+        <li><i class="pi pi-sparkles"></i><strong>Spiderly Angular</strong></li>
+        <ul class="features-list">
+          <li><i class="pi pi-check"></i>Ready-to-use frontend component library</li>
+        </ul>
       </ul>
-
-      <p-button label="Get Started" [fluid]="true" size="large"></p-button>
-    </div>
-
-    <div class="plan-card">
-      <div class="plan-header">
-        <h4>Premium</h4>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos.</p>
-      </div>
-
-      <hr />
-
-      <div class="plan-price">
-        <span class="price">$59</span>
-        <span class="period">per month</span>
-      </div>
-
-      <hr />
-
-      <ul class="features-list">
-        <li><span class="check-icon">✔</span><span>Arcu vitae elementum</span></li>
-        <li><span class="check-icon">✔</span><span>Dui faucibus in ornare</span></li>
-        <li><span class="check-icon">✔</span><span>Morbi tincidunt augue</span></li>
-        <li><span class="check-icon">✔</span><span>Duis ultricies lacus sed</span></li>
-      </ul>
-
-      <p-button label="Get Started" [fluid]="true" size="large"></p-button>
     </div>
 
   </div>
