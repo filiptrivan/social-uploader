@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
 import { PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading, withRouterConfig } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
@@ -6,7 +6,7 @@ import { routes, scrollConfig, routerConfigOptions } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { providePrimeNG } from 'primeng/config';
 import { ThemePreset } from 'src/assets/primeng-theme';
-import { AuthBaseService, ConfigBaseService, httpLoadingInterceptor, jsonHttpInterceptor, jwtInterceptor, LayoutBaseService, provideSpiderlyCore, provideSpiderlyTransloco, TranslateLabelsAbstractService, unauthorizedInterceptor, ValidatorAbstractService } from 'spiderly';
+import { AuthBaseService, ConfigBaseService, httpLoadingInterceptor, jsonHttpInterceptor, jwtInterceptor, LayoutBaseService, SpiderlyErrorHandler, SpiderlyTranslocoLoader, TranslateLabelsAbstractService, unauthorizedInterceptor, ValidatorAbstractService } from 'spiderly';
 import { provideSpinnerConfig } from 'ngx-spinner';
 import { SocialAuthServiceConfig, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
@@ -15,19 +15,30 @@ import { ValidatorService } from './business/services/validators/validators';
 import { AuthService } from 'src/app/business/services/auth/auth.service';
 import { ConfigService } from './business/services/config.service';
 import { LayoutService } from './business/services/layout/layout.service';
+import { provideTransloco } from '@jsverse/transloco';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
-    provideSpiderlyTransloco({
-      preloadLangs: ['en', 'en.generated'],
-      availableLangs: [
-        'en', 'en.generated',
-      ],
-      defaultLang: 'en',
-      fallbackLang: 'en.generated',
+    provideTransloco({
+      config: {
+        availableLangs: [
+          'en', 'en.generated',
+        ],
+        defaultLang: 'en',
+        fallbackLang: 'en.generated',
+        failedRetries: 0,
+        missingHandler: {
+          useFallbackTranslation: true,
+          logMissingKey: false,
+        },
+        reRenderOnLangChange: true,
+      },
+      loader: SpiderlyTranslocoLoader
     }),
     providePrimeNG({
       theme: {
@@ -45,9 +56,13 @@ export const appConfig: ApplicationConfig = {
     ),
     provideSpinnerConfig({type: 'ball-clip-rotate-multiple'}),
     provideClientHydration(withEventReplay()),
-    provideSpiderlyCore({
-      useAuth: false
-    }),
+    MessageService,
+    ConfirmationService,
+    DialogService,
+    {
+      provide: ErrorHandler,
+      useClass: SpiderlyErrorHandler,
+    },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

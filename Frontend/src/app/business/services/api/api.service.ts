@@ -17,6 +17,6 @@ export class ApiService extends ApiGeneratedService {
     }
 
     createCheckoutSession = (): Observable<any> => { 
-        return this.http.post(`${this.config.apiUrl}/create-checkout-session`, {}, {responseType: 'text'});
+        return this.http.post(`${this.config.apiUrl}/Stripe/CreateCheckoutSession`, {}, {responseType: 'text'});
     }
 }

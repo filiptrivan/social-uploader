@@ -16,8 +16,8 @@ Route::post('/Payment/GetPaginatedPaymentList', function (FilterDTO  $request) {
     return json_encode(PaymentFilterBuilder::build(Payment::query(), $filterDTO));
 });
 
-Route::post('/create-checkout-session', function (Request $request) {
-    $ch = curl_init('https://localhost:44388/create-checkout-session');
+Route::post('/Stripe/CreateCheckoutSession', function (Request $request) {
+    $ch = curl_init('https://localhost:44388/api/Stripe/CreateCheckoutSession');
 
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,

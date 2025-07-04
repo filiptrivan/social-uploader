@@ -10,6 +10,10 @@ const layoutRoutes: Routes = [
         path: 'payments',
         loadComponent: () => import('./pages/payment/payment-list.component').then(c => c.PaymentListComponent),
     },
+    {
+        path: 'successful-transaction',
+        loadComponent: () => import('./pages/successful-transaction/successful-transaction.component').then(c => c.SuccessfulTransactionComponent),
+    },
 ];
 
 export const routes: Routes = [
