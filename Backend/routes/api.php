@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RefreshTokenRequest;
 use App\Models\Payment;
 use App\QueryFilters\PaymentFilterBuilder;
+use Stripe\Webhook;
+use Stripe\Exception\SignatureVerificationException;
 
 Route::post('/Payment/GetPaginatedPaymentList', function (FilterDTO  $request) {
     $filterDTO = $request->toDto();
-    error_log(json_encode($filterDTO->all()));
-    error_log($filterDTO->first);
-    error_log(json_encode(PaymentFilterBuilder::build(Payment::query(), $filterDTO)));
+    error_log(json_encode($filterDTO));
+    // error_log($filterDTO->first);
+    // error_log(json_encode(PaymentFilterBuilder::build(Payment::query(), $filterDTO)));
     return json_encode(PaymentFilterBuilder::build(Payment::query(), $filterDTO));
 });
 
@@ -49,4 +51,30 @@ Route::post('/Stripe/CreateCheckoutSession', function (Request $request) {
     }
 
     return response()->json(['error' => 'Location header not found'], 500);
+});
+
+Route::post('/Stripe/Webhook', function (Request $request) {
+    $payload = $request->getContent();
+    $sigHeader = $request->header('Stripe-Signature');
+    $endpointSecret = env('StripeWebhookSecretKey', 'null');
+
+    try {
+        $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
+    } catch (SignatureVerificationException $e) {
+        return response("Webhook error: {$e->getMessage()}", 400);
+    }
+
+    if ($event->type === 'invoice.paid') {
+        $invoice = $event->data->object;
+
+        DB::transaction(function () use ($invoice) {
+            $transaction = new Payment();
+            $transaction->user_email = $invoice->customer_email;
+            $transaction->amount_paid = $invoice->amount_paid / 100.0;
+            $transaction->currency = $invoice->currency;
+            $transaction->save();
+        });
+    }
+
+    return response()->json(['status' => 'success'], 200);
 });

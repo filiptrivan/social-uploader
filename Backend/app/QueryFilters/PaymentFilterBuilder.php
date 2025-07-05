@@ -20,8 +20,8 @@ class PaymentFilterBuilder
                     continue;
                 }
 
-                $matchMode = $rule->matchMode;
-                $value = $rule->value;
+                $matchMode = MatchModeCodes::from($rule['matchMode']);
+                $value = $rule['value'];
 
                 switch ($field) {
                     case 'version':
