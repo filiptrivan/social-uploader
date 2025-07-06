@@ -8,9 +8,9 @@ use Illuminate\Support\Arr;
 use App\DTO\PaginatedResultDTO;
 use App\DTO\FilterDTO;
 
-class PaymentFilterBuilder
+class FilterBuilder
 {
-    public static function build(Builder $query, FilterDTO $filterDTO): PaginatedResultDTO
+    public static function buildTransaction(Builder $query, FilterDTO $filterDTO): PaginatedResultDTO
     {
         $filters = $filterDTO->filters;
 
@@ -29,8 +29,8 @@ class PaymentFilterBuilder
                         $query = self::applyNumericFilter($query, $field, $matchMode, $value);
                         break;
 
-                    case 'createdAt':
-                    case 'modifiedAt':
+                    case 'created_at':
+                    case 'modified_at':
                         $query = self::applyDateFilter($query, $field, $matchMode, $value);
                         break;
 
@@ -46,7 +46,6 @@ class PaymentFilterBuilder
 
         return new PaginatedResultDTO($totalRecords, $items);
     }
-
     private static function applyStringFilter(Builder $query, string $field, MatchModeCodes $matchMode, string $value): Builder
     {
         return match ($matchMode) {

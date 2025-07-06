@@ -41,9 +41,9 @@ export class LayoutComponent {
                         visible: true,
                     },
                     { 
-                        label: this.translocoService.translate('PaymentList'), 
-                        icon: 'pi pi-fw pi-megaphone', 
-                        routerLink: ['payments'],
+                        label: this.translocoService.translate('Transactions'), 
+                        icon: 'pi pi-fw pi-receipt', 
+                        routerLink: ['transactions'],
                         visible: true,
                     },
                     {

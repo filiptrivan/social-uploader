@@ -1,29 +1,11 @@
-/* Colors */
-$surface-0: #ffffff;
-$surface-50: #f9fafb;
-$surface-100: #f6f6f7;
-$surface-200: #e5e7eb;
-$surface-400: #9ca3af;
-$surface-500: #6b7280;
-$surface-600: #4b5563;
-$surface-700: #374151;
-$surface-800: #1f2937;
-$surface-900: #111827;
 
-$green-500: #22c55e;
+.pricing-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 36px;
 
-.pricing-container {
-    padding: 5rem 1.5rem;
-    font-family: Arial, sans-serif;
-
-    @media (min-width: 768px) {
-        padding-left: 3rem;
-        padding-right: 3rem;
-    }
-
-    @media (min-width: 1024px) {
-        padding-left: 5rem;
-        padding-right: 5rem;
+    @media (max-width: 1000px) {
+        flex-direction: column;
     }
 }
 
@@ -47,7 +29,7 @@ $green-500: #22c55e;
     }
 
     .subtitle {
-        color: $surface-500;
+        color: var(--p-surface-500);
         font-size: 1.125rem;
         line-height: 1.4;
     }
@@ -60,52 +42,28 @@ $green-500: #22c55e;
 
     .plan-card {
         flex: 1;
-        max-width: 450px;
-        border-radius: 1rem;
+        max-width: 500px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
         padding: 2rem;
 
-        background-color: $surface-800;
-        color: $surface-0;
+        background-color: var(--p-surface-900);
+        color: var(--p-surface-0);
+        border: 1px solid var(--p-content-border-color);
+        border-radius: var(--p-content-border-radius);
+        overflow: auto;
 
-        hr {
-            background-color: $surface-700;
-        }
-        .plan-price {
-            span.period {
-                color: $surface-400;
-            }
-        }
         .features-list span {
-            color: $surface-100;
-        }
-
-        .plan-header {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-
-            h4 {
-                font-weight: 500;
-                font-size: 1.25rem;
-                line-height: 1.2;
-            }
-
-            p {
-                color: $surface-400;
-                font-size: 1rem;
-                line-height: 1.4;
-            }
+            color: var(--p-surface-100);
         }
 
         hr {
             height: 1px;
             border: none;
-            background-color: $surface-200;
-            margin: 0;
+            background-color: var(--p-content-border-color);
+            margin: 0px;
         }
 
         .plan-price {
@@ -118,12 +76,6 @@ $green-500: #22c55e;
                 font-size: 2rem;
                 line-height: 1.1;
             }
-
-            span.period {
-                font-weight: 500;
-                color: $surface-400;
-                font-size: 1rem;
-            }
         }
 
         .features-list {
@@ -135,15 +87,25 @@ $green-500: #22c55e;
             margin: 0;
             flex-grow: 1;
 
+            i {
+                color: var(--p-secondary-color);
+            }
+            hr {
+                margin: 10px 0px;
+            }
             li {
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
-                line-height: 1.2;
+                line-height: 1;
             }
 
             .features-list {
-                margin-left: 18px;
+                gap: 1rem;
+                margin-left: 9px;
+                i {
+                    color: var(--p-text-color);
+                }
             }
         }
     }

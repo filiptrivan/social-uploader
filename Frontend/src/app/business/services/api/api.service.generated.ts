@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiSecurityService, Filter, PaginatedResult, Namebook, Codebook, LazyLoadSelectedIdsResult, VerificationTokenRequest, AuthResult, ExternalProvider } from 'spiderly';
 import { ConfigService } from '../config.service';
-import { Notification, Payment } from '../../entities/business-entities.generated';
+import { Notification, Transaction } from '../../entities/business-entities.generated';
 import { NotificationSaveBody } from '../../entities/business-entities.generated';
 import { NotificationMainUIForm } from '../../entities/business-entities.generated';
 import { User } from '../../entities/business-entities.generated';
@@ -105,8 +105,8 @@ export class ApiGeneratedService extends ApiSecurityService {
         return this.http.post<PaginatedResult<User>>(`${this.config.apiUrl}/User/GetPaginatedUserList`, filterDTO, this.config.httpSkipSpinnerOptions);
     }
 
-    getPaginatedPaymentList = (filterDTO: Filter): Observable<PaginatedResult<Payment>> => { 
-        return this.http.post<PaginatedResult<Payment>>(`${this.config.apiUrl}/Payment/GetPaginatedPaymentList`, filterDTO, this.config.httpSkipSpinnerOptions);
+    getPaginatedTransactionList = (filterDTO: Filter): Observable<PaginatedResult<Transaction>> => { 
+        return this.http.post<PaginatedResult<Transaction>>(`${this.config.apiUrl}/Transaction/GetPaginatedTransactionList`, filterDTO, this.config.httpSkipSpinnerOptions);
     }
 
     exportUserListToExcel = (filterDTO: Filter): Observable<any> => { 

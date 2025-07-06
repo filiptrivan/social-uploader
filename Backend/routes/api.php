@@ -5,17 +5,16 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Requests\RefreshTokenRequest;
-use App\Models\Payment;
-use App\QueryFilters\PaymentFilterBuilder;
+use App\Models\Transaction;
+use App\Models\Subscription;
+use App\QueryFilters\FilterBuilder;
 use Stripe\Webhook;
 use Stripe\Exception\SignatureVerificationException;
 
-Route::post('/Payment/GetPaginatedPaymentList', function (FilterDTO  $request) {
+Route::post('/Transaction/GetPaginatedTransactionList', function (FilterDTO  $request) {
     $filterDTO = $request->toDto();
     error_log(json_encode($filterDTO));
-    // error_log($filterDTO->first);
-    // error_log(json_encode(PaymentFilterBuilder::build(Payment::query(), $filterDTO)));
-    return json_encode(PaymentFilterBuilder::build(Payment::query(), $filterDTO));
+    return json_encode(FilterBuilder::buildTransaction(Transaction::query(), $filterDTO));
 });
 
 Route::post('/Stripe/CreateCheckoutSession', function (Request $request) {
@@ -68,7 +67,7 @@ Route::post('/Stripe/Webhook', function (Request $request) {
         $invoice = $event->data->object;
 
         DB::transaction(function () use ($invoice) {
-            $transaction = new Payment();
+            $transaction = new Transaction();
             $transaction->user_email = $invoice->customer_email;
             $transaction->amount_paid = $invoice->amount_paid / 100.0;
             $transaction->currency = $invoice->currency;

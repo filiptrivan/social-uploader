@@ -179,67 +179,118 @@ export class UserMainUIForm extends BaseEntity
     }
 }
 
-export class Payment extends BaseEntity
+export class Transaction extends BaseEntity
 {
+    user_email?: string;
+    amount_paid?: string;
+    currency?: string;
 	version?: number;
 	id?: number;
-	createdAt?: Date;
-	modifiedAt?: Date;
+    created_at?: Date;
+    modified_at?: Date;
 
     constructor(
     {
+        user_email,
+        amount_paid,
+        currency,
 		version,
 		id,
-		createdAt,
-		modifiedAt
+		created_at,
+		modified_at
     }:{
+        user_email?: string;
+        amount_paid?: string;
+        currency?: string;
 		version?: number;
 		id?: number;
-		createdAt?: Date;
-		modifiedAt?: Date;     
+		created_at?: Date;
+		modified_at?: Date;     
     } = {}
     ) {
-        super('Payment'); 
+        super('Transaction'); 
 
+        this.user_email = user_email;
+        this.amount_paid = amount_paid;
+        this.currency = currency;
 		this.version = version;
 		this.id = id;
-		this.createdAt = createdAt;
-		this.modifiedAt = modifiedAt;
+		this.created_at = created_at;
+		this.modified_at = modified_at;
     }
 }
 
 
-export class PaymentSaveBody extends BaseEntity
+export class TransactionSaveBody extends BaseEntity
 {
-    paymentDTO?: Payment;
+    transactionDTO?: Transaction;
 
     constructor(
     {
-        paymentDTO,
+        transactionDTO,
     }:{
-        paymentDTO?: Payment;
+        transactionDTO?: Transaction;
     } = {}
     ) {
-        super('PaymentSaveBody'); 
+        super('TransactionSaveBody'); 
 
-        this.paymentDTO = paymentDTO;
+        this.transactionDTO = transactionDTO;
     }
 }
 
 
-export class PaymentMainUIForm extends BaseEntity
+export class TransactionMainUIForm extends BaseEntity
 {
-    paymentDTO?: Payment;
+    transactionDTO?: Transaction;
 
     constructor(
     {
-        paymentDTO
+        transactionDTO
     }:{
-        paymentDTO?: Payment;     
+        transactionDTO?: Transaction;     
     } = {}
     ) {
-        super('PaymentMainUIForm'); 
+        super('TransactionMainUIForm'); 
 
-        this.paymentDTO = paymentDTO;
+        this.transactionDTO = transactionDTO;
+    }
+}
+
+export class Subscription extends BaseEntity
+{
+    user_email?: string;
+    transactions?: string;
+
+	version?: number;
+	id?: number;
+    created_at?: Date;
+    modified_at?: Date;
+
+    constructor(
+    {
+        user_email,
+        amount_paid,
+        currency,
+		version,
+		id,
+		created_at,
+		modified_at
+    }:{
+        user_email?: string;
+        amount_paid?: string;
+        currency?: string;
+		version?: number;
+		id?: number;
+		created_at?: Date;
+		modified_at?: Date;     
+    } = {}
+    ) {
+        super('Subscription'); 
+
+        this.user_email = user_email;
+		this.version = version;
+		this.id = id;
+		this.created_at = created_at;
+		this.modified_at = modified_at;
     }
 }

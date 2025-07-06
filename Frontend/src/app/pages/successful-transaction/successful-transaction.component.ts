@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Payment } from 'src/app/business/entities/business-entities.generated';
+import { Transaction } from 'src/app/business/entities/business-entities.generated';
 import { SpiderlyFormGroup, SpiderlyPanelsModule, SpiderlyControlsModule } from 'spiderly';
 
 @Component({
@@ -11,7 +11,6 @@ import { SpiderlyFormGroup, SpiderlyPanelsModule, SpiderlyControlsModule } from 
     ]
 })
 export class SuccessfulTransactionComponent implements OnInit {
-    paymentFormGroup = new SpiderlyFormGroup<Payment>({});
 
     constructor(
         

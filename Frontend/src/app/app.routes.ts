@@ -7,8 +7,8 @@ const layoutRoutes: Routes = [
         loadComponent: () => import('./pages/homepage/homepage.component').then(c => c.HomepageComponent),
     },
     {
-        path: 'payments',
-        loadComponent: () => import('./pages/payment/payment-list.component').then(c => c.PaymentListComponent),
+        path: 'transactions',
+        loadComponent: () => import('./pages/transaction/transaction-list.component').then(c => c.TransactionListComponent),
     },
     {
         path: 'successful-transaction',
